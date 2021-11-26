@@ -1,0 +1,2 @@
+// Range possible : -1000 to -30000
+AddSimpleModel(-1, 19379, -1000, "blank.dff", "speedometer.txd");
