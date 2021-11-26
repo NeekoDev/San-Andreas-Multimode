@@ -6,10 +6,19 @@
    |____/_/   \_\    |_|  |_|_|  |_|            
 
     @File       template.inc
-    @Author     Neeko
+    @Author     Author
 
     COPYRIGHT © 2021 - San Andreas Multimode
 */
+
+#if defined _inc_template
+	#undef _inc_template
+#endif
+
+#if defined _template_included
+	#endinput
+#endif
+#define _template_included
 
 /*
 * ==============================================================================
