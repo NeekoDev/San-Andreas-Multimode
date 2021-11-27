@@ -22,4 +22,7 @@
 
 #include <admin/core>
 #include <admin/level1>
+#include <admin/level2>
+#include <admin/level3>
+#include <admin/level4>
 #include <admin/level5>

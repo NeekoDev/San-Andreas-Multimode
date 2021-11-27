@@ -102,9 +102,9 @@ Lobby_Spawn(playerid)
     SetCameraBehindPlayer(playerid);
 
     // 
-    SetPlayerScore(playerid, player_Data[playerid][p_Score]);
-    SetPlayerSkin(playerid, player_Data[playerid][p_Skin]);
-    GivePlayerMoney(playerid, player_Data[playerid][p_Money]);
+    SetPlayerScore(playerid, GetPlayerScoreEx(playerid));
+    SetPlayerSkin(playerid, GetPlayerSkinEx(playerid));
+    GivePlayerMoney(playerid, GetPlayerMoneyEx(playerid));
 
     // TODO: Mapping
     
@@ -114,16 +114,21 @@ Lobby_Spawn(playerid)
     SetPlayerVirtualWorld(playerid, 0); // TODO
 
     // Set player spawned
-    player_Data[playerid][p_Spawned] = true;
+    SetPlayerSpawned(playerid, true);
 
     // Set player in lobby
-    player_Data[playerid][p_InLobby] = true;
+    SetPlayerInLobby(playerid, true);
 
     return 1;
 }
 
 SendLobbyMessage(playerid, const text[]) 
 {
+    if (!g_ChatLobbyEnabled) {
+        SendClientMessage(playerid, COLOR_RED, "Le canal lobby est désactivé.");
+        return 0;
+    }
+    
 	new
 		line1[256],
 		line2[128];
@@ -132,10 +137,10 @@ SendLobbyMessage(playerid, const text[])
     TruncateChatMessage(line1, line2);
 
     foreach(new i : Player) {
-        if (!player_Data[i][p_Spawned])
+        if (!IsPlayerSpawned(i))
             continue;
 
-        if (!player_Data[i][p_InLobby])
+        if (!IsPlayerInLobby(i))
             continue;
 
         if(!IsNull(line2)) {

@@ -13,7 +13,8 @@
 		"pBlueG/SA-MP-MySQL:R41-4",
 		"katursis/Pawn.CMD:3.3.6",
 		"Awsomedude/easyDialog",
-		"Sreyas-Sreelal/samp-bcrypt"
+		"Sreyas-Sreelal/samp-bcrypt",
+		"Southclaws/samp-ini"
 	],
 	"local": true,
 	"builds": [

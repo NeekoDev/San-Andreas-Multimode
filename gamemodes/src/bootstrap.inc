@@ -52,7 +52,12 @@
 * ==============================================================================
 */
 
+// Global player name
 new g_PlayerName[MAX_PLAYERS][MAX_PLAYER_NAME];
+
+// Channels (tog)
+new g_ChatLobbyEnabled;
+new g_ChatQuestionEnabled;
 
 /*
 * ==============================================================================
@@ -72,6 +77,10 @@ public OnScriptInit()
 {
     // Log
     Log_Info("Initializing ...");
+
+    // Settings
+    GetSettingInt("configs.ini", "chat_lobby_enabled", 1, g_ChatLobbyEnabled);
+    GetSettingInt("configs.ini", "chat_question_enabled", 1, g_ChatQuestionEnabled);
 
     // Database connection
     Database_Connect("localhost", "root", "", "samm");

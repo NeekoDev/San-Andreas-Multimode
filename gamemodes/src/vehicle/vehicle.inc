@@ -5,24 +5,19 @@
     ___) / ___ \_____| |  | | |  | |
    |____/_/   \_\    |_|  |_|_|  |_|            
 
-    @File       level5.inc
+    @File       vehicle.inc
     @Author     Neeko
 
     COPYRIGHT © 2021 - San Andreas Multimode
 */
 
-#if defined _inc_admin_level5
-	#undef _inc_admin_level5
+#if defined _inc_vehicle
+	#undef _inc_vehicle
 #endif
 
-#if defined _admin_level5_included
+#if defined _vehicle_included
 	#endinput
 #endif
-#define _admin_level5_included
+#define _vehicle_included
 
-flags:play(ADMIN_LEVEL_DEV)
-CMD:play(playerid, params[]) 
-{
-    Mode_ShowList(playerid);
-    return 1;
-}
+#include <vehicle/core>

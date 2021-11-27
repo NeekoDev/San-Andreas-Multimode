@@ -79,10 +79,10 @@ SendAdminMessage(colour, const message[], {Float,_}:...) {
 	format(buffer, sizeof(buffer), message, ___(2));
 
     foreach(new i : Player) {
-        if (!player_Data[i][p_Spawned])
+        if (!IsPlayerSpawned(i))
             continue;
 
-        if (!player_Data[i][p_Admin])
+        if (!GetPlayerAdmin(i))
             continue;
 
         SendClientMessage(i, colour, buffer);

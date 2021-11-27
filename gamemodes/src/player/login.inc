@@ -98,11 +98,18 @@ hook OnPlayerConnect(playerid)
 public Login_OnPasswordChecked(playerid, bool:success)
 {
     new
+        password[MAX_PASSWORD_LEN],
+        lastLoginIP[MAX_IP_LEN],
+        currentIP[MAX_IP_LEN],
         dialogTitle[TITLE_DIALOG_LEN],
         dialogContent[NORMAL_DIALOG_LEN];
     
-    if (!IsNull(player_Data[playerid][p_Password]) && success) {
-        if(!strcmp(player_Data[playerid][p_LastLoginIP], player_Data[playerid][p_CurrentIP], false)) {
+    GetPlayerPassword(playerid, password);
+    GetPlayerLastLoginIP(playerid, lastLoginIP);
+    GetPlayerCurrentIP(playerid, currentIP);
+
+    if (!IsNull(password) && success) {
+        if(!strcmp(lastLoginIP, currentIP, false)) {
             CallLocalFunction("OnPlayerLogged", "d", playerid);
         }
         else {
@@ -139,9 +146,13 @@ public Login_OnPasswordChecked(playerid, bool:success)
 
 public Login_OnPinChecked(playerid, bool:success)
 {
-    new dialogTitle[TITLE_DIALOG_LEN];
+    new 
+        pin[MAX_PIN_LEN],
+        dialogTitle[TITLE_DIALOG_LEN];
 
-    if (!IsNull(player_Data[playerid][p_Pin]) && success) {
+    GetPlayerPin(playerid, pin);
+
+    if (!IsNull(pin) && success) {
         CallLocalFunction("OnPlayerLogged", "d", playerid);
     }
     else {
@@ -226,7 +237,10 @@ Dialog:LoginPassword_Dialog(playerid, response, item, input[])
         return 0;
     }
 
-    bcrypt_verify(playerid, "Login_OnPasswordChecked", input, player_Data[playerid][p_Password]);
+    new password[MAX_PASSWORD_LEN];
+    GetPlayerPassword(playerid, password);
+
+    bcrypt_verify(playerid, "Login_OnPasswordChecked", input, password);
 
     return 1;
 }
@@ -267,7 +281,10 @@ Dialog:LoginPin_Dialog(playerid, response, item, input[])
         return 0;
     }
 
-    bcrypt_verify(playerid, "Login_OnPinChecked", input, player_Data[playerid][p_Pin]);
+    new pin[MAX_PIN_LEN];
+    GetPlayerPin(playerid, pin);
+
+    bcrypt_verify(playerid, "Login_OnPinChecked", input, pin);
 
     return 1;
 }

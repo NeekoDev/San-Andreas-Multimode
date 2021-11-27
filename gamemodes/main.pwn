@@ -49,6 +49,7 @@
 */
 
 #include "shared/log"
+#include "shared/settings"
 #include "shared/database"
 #include "shared/helper/helper"
 
@@ -71,7 +72,10 @@
 #include "track/track"
 #include "race/race"
 #include "player/player"
+#include "punishment/punishment"
 #include "lobby/lobby"
+#include "vehicle/vehicle"
+
 #include "admin/admin"
 
 /*
@@ -97,7 +101,7 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {   
-    if (flags > ADMIN_LEVEL_PLAYER && player_Data[playerid][p_Admin] < flags) {
+    if (flags > ADMIN_LEVEL_PLAYER && GetPlayerAdmin(playerid) < flags) {
         SendClientMessage(playerid, COLOR_ERROR, "Vous ne disposez pas des permissions requises.");
 
         return 0; 
@@ -108,7 +112,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 
 public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags) 
 {
-    if (!player_Data[playerid][p_Spawned])
+    if (!IsPlayerSpawned(playerid))
         return 0;
 
     switch(result) {

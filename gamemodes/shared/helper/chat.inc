@@ -37,3 +37,14 @@ TruncateChatMessage(input[], output[]) {
 
 	return 0;
 }
+
+SendClientMessageToAllEx(colour, const format[], va_args<>) {
+	new
+		gs_Buffer[256];
+		
+	va_format(gs_Buffer, sizeof(gs_Buffer), format, va_start<2>);
+
+	SendClientMessageToAll(colour, gs_Buffer);
+
+	return 1;
+}

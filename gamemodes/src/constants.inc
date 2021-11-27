@@ -37,11 +37,14 @@
 */
 
 #define COLOR_WHITE                             0xFFFFFFFF
+#define COLOR_RED                               0xFF6347AA
 
 #define COLOR_ERROR                             0xFF6347AA
-#define COLOR_ADMIN_CHAT                        0xFFFFFFFF
-#define COLOR_USAGE                             0xFFFFFFFF
-#define COLOR_LOBBY                             0xFFFFFFFF
+#define COLOR_ADMIN                             0xFFFFFFFF // TODO
+#define COLOR_ADMIN_CHAT                        0xFFFFFFFF // TODO
+#define COLOR_USAGE                             0xFFFFFFFF // TODO
+#define COLOR_OPTION                            0xFFFFFFFF // TODO
+#define COLOR_LOBBY                             0xFFFFFFFF // TODO
 
 /*
 * ==============================================================================
@@ -71,6 +74,12 @@
 * String length
 * ==============================================================================
 */
+
+// Strings
+#define LIGHT_STRING_LEN                        (64)
+#define CHAT_STRING_LEN                         (128)
+#define NORMAL_STRING_LEN                       (256)
+
 
 // Query
 #define LIGHT_MYSQL_QUERY                       (64)

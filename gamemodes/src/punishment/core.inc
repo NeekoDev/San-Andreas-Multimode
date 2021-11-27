@@ -5,28 +5,26 @@
     ___) / ___ \_____| |  | | |  | |
    |____/_/   \_\    |_|  |_|_|  |_|            
 
-    @File       chat.inc
-    @Author     Neeko
+    @File       core.inc
+    @Author     Author
 
     COPYRIGHT © 2021 - San Andreas Multimode
 */
 
-#if defined _inc_player_chat
-	#undef _inc_player_chat
+#if defined _inc_punishment_core
+	#undef _inc_punishment_core
 #endif
 
-#if defined _player_chat_included
+#if defined _punishment_core_included
 	#endinput
 #endif
-#define _player_chat_included
+#define _punishment_core_included
 
 /*
 * ==============================================================================
 * Dependencies
 * ==============================================================================
 */
-
-#include <YSI_Coding\y_hooks>
 
 /*
 * ==============================================================================
@@ -63,21 +61,6 @@
 * Lifecycle events
 * ==============================================================================
 */
-
-hook OnPlayerText(playerid, text[]) 
-{
-    // Checks
-    if (!IsPlayerSpawned(playerid))
-        return 0;
-
-    // Player is in lobby
-    if (IsPlayerInLobby(playerid)) {
-        SendLobbyMessage(playerid, text);
-        return 0;
-    }
-
-    return 0;
-}
 
 /*
 * ==============================================================================

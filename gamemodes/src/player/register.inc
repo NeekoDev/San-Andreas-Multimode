@@ -220,6 +220,7 @@ Dialog:Register_Dialog(playerid, response, item, input[])
                 return 0;            
             }
 
+            // TODO: Improve that
             inline InlineCallback() 
             {
                 if (cache_num_rows()) {

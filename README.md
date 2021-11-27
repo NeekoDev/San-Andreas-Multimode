@@ -6,9 +6,9 @@
 
 To get started with San Andreas Multimode, you need the following tools installed on your computer :
 
-- [Visual Studio Code](https://code.visualstudio.com/) *To avoid encoding or other worries, it is better to use this editor.*
+- [Visual Studio Code](https://code.visualstudio.com/) *To avoid encoding or other worries, it is better to use this editor*
 - [sampctl](https://github.com/Southclaws/sampctl) - *It includes a package manager, a build tool and a configuration manager*
-- [MariaDB](https://mariadb.org/download/) or [MySQL](https://dev.mysql.com/downloads/mysql/) - For the server data persistency
+- [MariaDB](https://mariadb.org/download/) or [MySQL](https://dev.mysql.com/downloads/mysql/) - *For the server data persistency*
 
 ## Installation
 

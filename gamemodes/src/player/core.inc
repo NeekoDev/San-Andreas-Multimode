@@ -81,7 +81,8 @@ enum E_PLAYER_DATA
 	p_CurrentIP[MAX_IP_LEN],
     bool:p_Connecting,
 	bool:p_Spawned,
-	bool:p_InLobby
+	bool:p_InLobby,
+	p_Room
 }
 
 /*
@@ -90,7 +91,7 @@ enum E_PLAYER_DATA
 * ==============================================================================
 */
 
-new player_Data[MAX_PLAYERS][E_PLAYER_DATA];
+static player_Data[MAX_PLAYERS][E_PLAYER_DATA];
 
 /*
 * ==============================================================================
@@ -290,6 +291,7 @@ static _Player_Reset(playerid)
 	player_Data[playerid][p_Connecting] = false;
 	player_Data[playerid][p_Spawned] = false;
 	player_Data[playerid][p_InLobby] = false;
+	player_Data[playerid][p_Room] = INVALID_ROOM_ID;
 
 	return 1;
 }
@@ -317,3 +319,159 @@ static _Player_Reset(playerid)
 * Get / Set
 * ==============================================================================
 */
+
+// p_Password
+stock GetPlayerPassword(playerid, password[MAX_PASSWORD_LEN]) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    password[0] = EOS;
+    strcat(password, player_Data[playerid][p_Password], MAX_PASSWORD_LEN);
+
+    return 1;
+}
+
+// p_Pin
+stock GetPlayerPin(playerid, pin[MAX_PIN_LEN]) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    pin[0] = EOS;
+    strcat(pin, player_Data[playerid][p_Pin], MAX_PIN_LEN);
+
+    return 1;
+}
+
+// p_LastLoginIP
+stock GetPlayerLastLoginIP(playerid, ip[MAX_IP_LEN]) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    ip[0] = EOS;
+    strcat(ip, player_Data[playerid][p_LastLoginIP], MAX_IP_LEN);
+
+    return 1;
+}
+
+// p_Admin
+stock GetPlayerAdmin(playerid) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    return player_Data[playerid][p_Admin];
+}
+
+// p_Skin
+stock GetPlayerSkinEx(playerid) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    return player_Data[playerid][p_Skin];
+}
+
+// p_Score
+stock GetPlayerScoreEx(playerid) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    return player_Data[playerid][p_Score];
+}
+
+// p_Money
+stock GetPlayerMoneyEx(playerid) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    return player_Data[playerid][p_Money];
+}
+
+// Internal properties
+// p_CurrentIP
+stock GetPlayerCurrentIP(playerid, ip[MAX_IP_LEN]) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    ip[0] = EOS;
+    strcat(ip, player_Data[playerid][p_CurrentIP], MAX_IP_LEN);
+
+    return 1;
+}
+
+// p_Spawned
+stock bool:IsPlayerSpawned(playerid)
+{
+    if(!IsPlayerConnected(playerid)) {
+        return false;
+    }
+
+	return player_Data[playerid][p_Spawned];
+}
+
+stock SetPlayerSpawned(playerid, bool:value) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    player_Data[playerid][p_Spawned] = value;
+
+    return 1;
+}
+
+// p_InLobby
+stock bool:IsPlayerInLobby(playerid)
+{
+    if(!IsPlayerConnected(playerid)) {
+        return false;
+    }
+
+	return player_Data[playerid][p_InLobby];
+}
+
+stock SetPlayerInLobby(playerid, bool:value) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_PLAYER_ID;
+    }
+
+    player_Data[playerid][p_InLobby] = value;
+
+    return 1;
+}
+
+// p_Room
+stock GetPlayerRoom(playerid) 
+{
+    if(!IsPlayerConnected(playerid)) {
+        return INVALID_ROOM_ID;
+    }
+
+    return player_Data[playerid][p_Room];
+}
+
+stock SetPlayerRoom(playerid, roomid) 
+{
+    if(!IsValidRoom(roomid)) {
+        return INVALID_ROOM_ID;
+    }
+
+    player_Data[playerid][p_Room] = roomid;
+
+    return 1;
+}

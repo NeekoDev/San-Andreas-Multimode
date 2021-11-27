@@ -26,8 +26,8 @@
 * ==============================================================================
 */
 
-#include <YSI_Coding\y_hooks>
 #include <YSI_Data\y_iterate>
+#include <YSI_Coding\y_hooks>
 
 /*
 * ==============================================================================
@@ -72,8 +72,13 @@ enum E_MODE_DATA
 * ==============================================================================
 */
 
-static mode_Data[MAX_MODE][E_MODE_DATA];
-new Iterator:mode_List<MAX_MODE>;
+static 
+    mode_Data[MAX_MODE][E_MODE_DATA],
+    mode_ListIndex[MAX_PLAYERS][MAX_MODE],
+    mode_ListSelected[MAX_PLAYERS];
+
+new 
+    Iterator:mode_List<MAX_MODE>;
 
 /*
 * ==============================================================================
@@ -97,6 +102,17 @@ hook OnGameModeInit()
 hook OnDatabaseInitialized()
 {
     _Mode_Load();
+
+    return 1;
+}
+
+hook OnPlayerConnect(playerid)
+{
+    for(new i = 0; i < MAX_MODE; i++) {
+        mode_ListIndex[playerid][i] = INVALID_MODE_ID;
+    }
+
+    mode_ListSelected[playerid] = INVALID_MODE_ID;
 
     return 1;
 }
@@ -145,6 +161,35 @@ public Mode_OnLoad()
 * ==============================================================================
 */
 
+Mode_ShowList(playerid) 
+{
+    new 
+        count = 0,
+        dialogContent[NORMAL_DIALOG_LEN];
+
+    foreach(new modeid : mode_List) {
+        if(mode_Data[modeid][m_Enabled]) {
+            format(dialogContent, sizeof(dialogContent), "%s%s\n", dialogContent, mode_Data[modeid][m_Name]);
+
+            mode_ListIndex[playerid][count] = modeid;
+
+            count++;
+        }
+    }
+
+    Dialog_Open(
+        playerid,
+        "Mode_Dialog",
+        DIALOG_STYLE_LIST,
+        "Liste des modes",
+        dialogContent,
+        "Valider",
+        "Quitter"
+    );
+
+    return 1;
+}
+
 /*
 * ==============================================================================
 * Private functions
@@ -164,6 +209,18 @@ static _Mode_Load()
 * ==============================================================================
 */
 
+Dialog:Mode_Dialog(playerid, response, item, input[]) 
+{
+    if(!response)
+        return 0;
+
+    mode_ListSelected[playerid] = mode_ListIndex[playerid][item];
+
+    Room_ShowList(playerid, mode_ListSelected[playerid]);
+
+    return 1;
+}
+
 /*
 * ==============================================================================
 * Timers
@@ -181,3 +238,26 @@ static _Mode_Load()
 * Get / Set
 * ==============================================================================
 */
+
+// m_Id
+stock GetModeId(modeid) 
+{
+    if(!Iter_Contains(mode_List, modeid)) {
+        return INVALID_MODE_ID;
+    }
+
+    return mode_Data[modeid][m_Id];
+}
+
+// m_Name
+stock GetModeName(modeid, name[MAX_MODE_NAME]) 
+{
+    if(!Iter_Contains(mode_List, modeid)) {
+        return INVALID_MODE_ID;
+    }
+
+    name[0] = EOS;
+    strcat(name, mode_Data[modeid][m_Name], MAX_MODE_NAME);
+
+    return 1;
+}
